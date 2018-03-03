@@ -1,0 +1,21 @@
+language: python
+
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+install:
+    - pip install pipenv
+    - pipenv install --dev
+    - pipenv install coveralls --skip-lock
+
+before_script:
+    - pipenv run flake8 --ignore=E501 redistore
+
+script:
+    - pipenv run py.test --cov=redistore --cov-report=term-missing
+
+after_script:
+    - pipenv run coveralls
