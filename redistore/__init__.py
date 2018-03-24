@@ -26,9 +26,9 @@ class RedisStore:
             value = self.redis_client.get(key)
             return value.decode()
         elif redis_type == 'hash':
-            return Hash(key)
-        else:
-            raise NotImplementedError(f'{redis_type} type not supported')
+            return Hash(key=key, store=self)
+
+        raise NotImplementedError(f'{redis_type} type not supported')
 
     def __setitem__(self, key, value):
         self.redis_client.set(key, value)
