@@ -31,7 +31,10 @@ class RedisStore:
         raise NotImplementedError(f'{redis_type} type not supported')
 
     def __setitem__(self, key, value):
-        self.redis_client.set(key, value)
+        if isinstance(value, dict):
+            Hash(key=key, store=self, data=value)
+        else:
+            self.redis_client.set(key, value)
 
     def __delitem__(self, key):
         pass
