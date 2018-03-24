@@ -2,6 +2,8 @@ from redis import StrictRedis
 
 from .types import Hash
 
+__all__ = ['Hash', 'get']
+
 
 def get(**kwargs):
     return RedisStore(**kwargs)
@@ -10,6 +12,10 @@ def get(**kwargs):
 class RedisStore:
     def __init__(self, **kwargs):
         self.redis_client = StrictRedis(**kwargs)
+
+    @property
+    def connection_kwargs(self):
+        return self.redis_client.connection_pool.connection_kwargs
 
     def __getitem__(self, key):
         redis_type = self.redis_client.type(key).decode('utf-8')
