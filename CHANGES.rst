@@ -6,6 +6,6 @@ Changes
 ==================
 
 * Implement ``redistore.get()`` function
-* Add RedisStore
+* Add RedisStore with special methods such as __getitem__, __delitem__ etc.
 * Add redistore support to hashes
 * Add redistore support to strings
