@@ -20,24 +20,24 @@ class Hash(RedisType, MutableMapping):
             self.update(kwargs)
 
     def __getitem__(self, key):
-        value = self._store.client.hget(self._hash_name, key)
+        value = self._store.redis_client.hget(self.hash_name, key)
         if value is None:
             raise KeyError(key)
-        return value
+        return value.decode()
 
     def __setitem__(self, key, value):
-        self._store.client.hset(self._hash_name, key, value)
+        self._store.redis_client.hset(self.hash_name, key, value)
 
     def __delitem__(self, key):
-        exists = self._store.client.hdel(self._hash_name, key)
+        exists = self._store.redis_client.hdel(self.hash_name, key)
         if exists == 0:
             raise KeyError(key)
 
     def __iter__(self):
-        return self._store.client.hscan_iter(self._hash_name)
+        return (key.decode() for key in self._store.redis_client.hkeys(self.hash_name))
 
     def __len__(self):
-        return self._store.client.hlen(self._hash_name)
+        return self._store.redis_client.hlen(self.hash_name)
 
     def __contains__(self, key):
         return self._store.client.hexists(self._hash_name, key)
