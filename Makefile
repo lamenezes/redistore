@@ -16,7 +16,7 @@ clean-build:
 	@rm -fr *.egg-info
 
 build: clean test
-	python setup.py sdist
+	pipenv run python setup.py sdist
 
 test:
-	py.test
+	pipenv run py.test
