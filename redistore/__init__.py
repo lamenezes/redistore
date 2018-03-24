@@ -24,7 +24,7 @@ class RedisStore:
 
         if redis_type == 'string':
             value = self.redis_client.get(key)
-            return str(value)
+            return value.decode()
         elif redis_type == 'hash':
             return Hash(key)
         else:
