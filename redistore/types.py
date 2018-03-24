@@ -1,17 +1,23 @@
 from collections.abc import MutableMapping
 
 
-class Hash(MutableMapping):
-    def __init__(self, store, hash_name, **kwargs):
+class RedisType:
+    def __init__(self, key=None, store=None, **kwargs):
+        self._key = key
         self._store = store
-        self._hash_name = hash_name
-        if kwargs:
-            self.update(kwargs)
 
     def __repr__(self):
-        return '{}(hash_name={!r}, host={host!r}, port={port}, db={db})'.format(
-            type(self).__name__, self._hash_name, **self._store.client.connection_pool.connection_kwargs
+        return '{}(key={!r}, host={host!r}, port={port}, db={db})'.format(
+            type(self).__name__, self._key, **self._store.connection_kwargs
         )
+
+
+class Hash(RedisType, MutableMapping):
+    def __init__(self, key, store, **kwargs):
+        super().__init__(key, store, **kwargs)
+        self.hash_name = self._key
+        if kwargs:
+            self.update(kwargs)
 
     def __getitem__(self, key):
         value = self._store.client.hget(self._hash_name, key)
