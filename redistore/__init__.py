@@ -37,4 +37,9 @@ class RedisStore:
             self.redis_client.set(key, value)
 
     def __delitem__(self, key):
-        pass
+        exists = self.redis_client.delete(key)
+        if exists == 0:
+            raise KeyError(key)
+
+    def __contains__(self, key):
+        return self.redis_client.exists(key) is True
