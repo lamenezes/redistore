@@ -7,9 +7,7 @@ class RedisType:
         self._store = store
 
     def __repr__(self):
-        return '{}(key={!r}, host={host!r}, port={port}, db={db})'.format(
-            type(self).__name__, self._key, **self._store.connection_kwargs
-        )
+        return '{}(key={!r})'.format(type(self).__name__, self._key)
 
 
 class Hash(RedisType, MutableMapping):
@@ -19,6 +17,10 @@ class Hash(RedisType, MutableMapping):
         self.hash_name = self._key
         if data:
             self.update(data)
+
+    def __repr__(self):
+        r = super().__repr__()[:-1]
+        return '{}, data={!r})'.format(r, dict(self))
 
     def __getitem__(self, key):
         value = self._store.redis_client.hget(self.hash_name, key)

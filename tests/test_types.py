@@ -13,8 +13,8 @@ def redis_hash(store):
 def test_redis_hash(redis_hash):
     assert redis_hash._store
     assert redis_hash.hash_name
-    assert 'key' in repr(redis_hash)
-    assert "host='" in repr(redis_hash)
+    assert 'key=' in repr(redis_hash)
+    assert 'data=' in repr(redis_hash)
 
 
 def test_redis_hash_contains(redis_hash):

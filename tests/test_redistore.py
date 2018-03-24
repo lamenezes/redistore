@@ -16,7 +16,9 @@ def test_get(mock_store):
 
 def test_redis_store(store):
     assert store.redis_client
-    assert store.connection_kwargs
+    assert 'host=' in repr(store)
+    assert 'port=' in repr(store)
+    assert 'db=' in repr(store)
 
 
 def test_redis_store_setitem_string(store):
