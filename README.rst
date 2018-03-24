@@ -37,8 +37,12 @@ Now you can access and store keys and values with a dict-like interface:
     >> store['foo'] = 'bar'
     >> store['foo']
     'bar'
-    >> len(store)
-    1
+    >> 'foo' in store
+    True
+    >> del store['foo']
+    >> store['foo']
+    ...
+    KeyError: 'foo'
 
 Or using methods:
 
@@ -48,15 +52,27 @@ Or using methods:
     >> store.get('baz')
     'qux'
 
-You may even use another types:
+``redistore`` support other data types, e.g., hashes. they are used exactly like a dict:
 
 .. code:: python
 
-    >> store.create_hash('hash', {'my': 'hash'})
-    >> store['hash']
-    {'my': 'hash'}
-    >> store['hash']['foo'] = 'bar'
-    {'my': 'hash', 'foo': 'bar'}
+    >> store['hash'] = {}  # creates a hash without any values
+    >> 'my' in store['hash']
+    True
+    >> store['hash']['my']
+    'hash'
     >> store['hash'].update({'baz': 'qux'})
-    >> store['hash']
-    {'my': 'hash', 'foo': 'bar', 'baz': 'qux'}
+    >> store['hash']['baz']
+    'qux'
+    >> len(store['hash'])
+    2
+    >> list(store.keys())
+    ['foo', 'bar']
+    >> for key, value in store.items():
+    ...    print(key, value)
+    ...
+    my hash
+    baz qux
+    >> store['other_hash'] = {'foo': 'bar'}  # creates a hash with values
+    >> store['other_hash']['foo']
+    'bar'
