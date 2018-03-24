@@ -1,25 +1,6 @@
-from unittest import mock
-
 import pytest
-from fakeredis import FakeStrictRedis
 
 from redistore.types import Hash
-
-
-class MyFakeStrictRedis(FakeStrictRedis):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        connection_kwargs = {'host': 'host', 'port': '6969', 'db': 0}
-        self.connection_pool = mock.Mock(connection_kwargs=connection_kwargs)
-
-
-@pytest.fixture
-def store():
-    fake_redis_client = MyFakeStrictRedis()
-    return mock.Mock(
-        connection_kwargs=fake_redis_client.connection_pool.connection_kwargs,
-        redis_client=fake_redis_client,
-    )
 
 
 @pytest.fixture
