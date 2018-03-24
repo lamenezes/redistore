@@ -13,11 +13,12 @@ class RedisType:
 
 
 class Hash(RedisType, MutableMapping):
-    def __init__(self, key, store, **kwargs):
-        super().__init__(key, store, **kwargs)
+    def __init__(self, key, store, data=None):
+        super().__init__(key, store)
+
         self.hash_name = self._key
-        if kwargs:
-            self.update(kwargs)
+        if data:
+            self.update(data)
 
     def __getitem__(self, key):
         value = self._store.redis_client.hget(self.hash_name, key)

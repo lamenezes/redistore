@@ -68,7 +68,7 @@ def test_redis_hash_create_and_store(store):
         'bar': 'barz',
         'baz': 'bazz',
     }
-    redis_hash = Hash('dcg', store, **data)
+    redis_hash = Hash('dcg', store, data=data)
 
     assert dict(redis_hash) == data
 
