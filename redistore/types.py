@@ -40,4 +40,13 @@ class Hash(RedisType, MutableMapping):
         return self._store.redis_client.hlen(self.hash_name)
 
     def __contains__(self, key):
-        return self._store.client.hexists(self._hash_name, key)
+        return self._store.redis_client.hexists(self.hash_name, key)
+
+    def clear_keys(self, keys):
+        keys = set(keys)
+        inexistent_keys = keys - set(self.keys())
+        if inexistent_keys:
+            raise KeyError(inexistent_keys)
+
+        for key in keys:
+            del self[key]
