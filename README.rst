@@ -22,7 +22,7 @@ Installation
 
 .. code:: bash
 
-    pip install redistore
+    $ pip install redistore
 
 
 Usage
@@ -30,20 +30,20 @@ Usage
 
 .. code:: python
 
-    >> import redistore
-    >> store = redistore.get(host='localhost', port=6379, db=0)
+    >>> import redistore
+    >>> store = redistore.get(host='localhost', port=6379, db=0)
 
 Now you can access and store keys and values with a dict-like interface:
 
 .. code:: python
 
-    >> store['foo'] = 'bar'
-    >> store['foo']
+    >>> store['foo'] = 'bar'
+    >>> store['foo']
     'bar'
-    >> 'foo' in store
+    >>> 'foo' in store
     True
-    >> del store['foo']
-    >> store['foo']
+    >>> del store['foo']
+    >>> store['foo']
     ...
     KeyError: 'foo'
 
@@ -51,31 +51,32 @@ Or using methods:
 
 .. code:: python
 
-    >> store.set('baz', 'qux')
-    >> store.get('baz')
+    >>> store.set('baz', 'qux')
+    >>> store.get('baz')
     'qux'
 
 ``redistore`` support other data types, e.g., hashes. they are used exactly like a dict:
 
 .. code:: python
 
-    >> store['hash'] = {}  # creates a hash without any values
-    >> 'my' in store['hash']
+    >>> store['hash'] = {}  # creates a hash without any values
+    >>> store['hash']['my'] = 'hash'
+    >>> 'my' in store['hash']
     True
-    >> store['hash']['my']
+    >>> store['hash']['my']
     'hash'
-    >> store['hash'].update({'baz': 'qux'})
-    >> store['hash']['baz']
+    >>> store['hash'].update({'baz': 'qux'})
+    >>> store['hash']['baz']
     'qux'
-    >> len(store['hash'])
+    >>> len(store['hash'])
     2
-    >> list(store.keys())
+    >>> list(store.keys())
     ['foo', 'bar']
-    >> for key, value in store.items():
+    >>> for key, value in store.items():
     ...    print(key, value)
     ...
     my hash
     baz qux
-    >> store['other_hash'] = {'foo': 'bar'}  # creates a hash with values
-    >> store['other_hash']['foo']
+    >>> store['other_hash'] = {'foo': 'bar'}  # creates a hash with values
+    >>> store['other_hash']['foo']
     'bar'
