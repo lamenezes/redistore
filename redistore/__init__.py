@@ -28,7 +28,7 @@ class RedisStore:
         elif redis_type == 'hash':
             return Hash(key=key, store=self)
 
-        raise NotImplementedError(f'{redis_type} type not supported')
+        raise NotImplementedError('{} type not supported'.format(redis_type))
 
     def __setitem__(self, key, value):
         if isinstance(value, dict):
