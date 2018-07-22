@@ -11,6 +11,9 @@ redistore
 .. image:: https://coveralls.io/repos/github/lamenezes/redistore/badge.svg?branch=master
     :target: https://coveralls.io/github/lamenezes/redistore?branch=master
 
+.. image:: https://img.shields.io/badge/python-3.4,3.5,3.6-blue.svg
+    :target: https://github.com/lamenezes/simple-model
+
 
 Simple python interface for redis 
 
